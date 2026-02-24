@@ -91,10 +91,14 @@
 	  function initializeClock(endtime){
 	  var timeinterval = setInterval(function(){
 	    var t = getTimeRemaining(endtime);
-	    document.querySelector(".days > .value").innerText=t.days;
-	    document.querySelector(".hours > .value").innerText=t.hours;
-	    document.querySelector(".minutes > .value").innerText=t.minutes;
-	    document.querySelector(".seconds > .value").innerText=t.seconds;
+	    var dEl = document.querySelector(".days > .value");
+	    var hEl = document.querySelector(".hours > .value");
+	    var mEl = document.querySelector(".minutes > .value");
+	    var sEl = document.querySelector(".seconds > .value");
+	    if(dEl) dEl.innerText = t.days;
+	    if(hEl) hEl.innerText = t.hours;
+	    if(mEl) mEl.innerText = t.minutes;
+	    if(sEl) sEl.innerText = t.seconds;
 	    if(t.total<=0){
 	      clearInterval(timeinterval);
 	    }

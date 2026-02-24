@@ -7,7 +7,7 @@
     <meta name="author" content="" />
     <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900" rel="stylesheet" />
 
-    <title>Grad School HTML5 Template</title>
+    <title>Sistem Informasi Geografis</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
@@ -24,26 +24,219 @@ TemplateMo 557 Grad School
 https://templatemo.com/tm-557-grad-school
 
 -->
+    <!-- Google Font Poppins untuk panel filter -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-      .category-buttons {
+      /* ====== Peta Klasifikasi Section ====== */
+      :root {
+        --navy:   #172238;
+        --navy2:  #1e2f4d;
+        --amber:  #f5a425;
+        --amber2: #e08c10;
+        --glass:  rgba(255,255,255,0.06);
+      }
+
+      /* Wrapper utama */
+      .peta-klasifikasi-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 28px;
+        align-items: flex-start;
+        margin-top: 24px;
+        position: relative;
+        z-index: 5;
+      }
+
+      /* Panel tombol */
+      .btn-panel {
+        flex: 0 0 230px;
         display: flex;
         flex-direction: column;
-        gap: 12px;
+        gap: 10px;
+        position: relative;
+        z-index: 10;
+        background: rgba(23,34,56,0.55);
+        backdrop-filter: blur(10px);
+        border-radius: 16px;
+        padding: 20px 16px;
+        border: 1px solid rgba(245,164,37,0.2);
+        box-shadow: 0 8px 32px rgba(0,0,0,0.4);
       }
+
+      /* Label atas panel */
+      .btn-panel-title {
+        font-family: 'Poppins', 'Montserrat', sans-serif;
+        color: var(--amber);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgba(245,164,37,0.3);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .btn-panel-title::before {
+        content: '';
+        width: 4px;
+        height: 16px;
+        background: var(--amber);
+        border-radius: 2px;
+        flex-shrink: 0;
+      }
+
+      /* Tombol kategori */
       .cat-btn {
-        padding: 14px;
+        font-family: 'Poppins', 'Montserrat', sans-serif;
+        padding: 12px 16px;
         width: 100%;
-        background: #ff9900;
-        color: white;
-        border: none;
-        border-radius: 6px;
-        font-size: 16px;
-        font-weight: bold;
+        color: rgba(255,255,255,0.85);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 500;
         cursor: pointer;
-        transition: 0.2s;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        text-align: left;
+        display: flex !important;
+        align-items: center;
+        gap: 12px;
+        position: relative;
+        z-index: 10;
+        pointer-events: auto !important;
+        overflow: hidden;
+        background: var(--glass);
+      }
+
+      /* Shimmer effect */
+      .cat-btn::after {
+        content: '';
+        position: absolute;
+        top: 0; left: -100%;
+        width: 60%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+        transition: left 0.5s ease;
+      }
+      .cat-btn:hover::after {
+        left: 150%;
+      }
+
+      /* Ikon warna kategori */
+      .cat-btn .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        transition: transform 0.3s ease;
+        box-shadow: 0 0 6px currentColor;
+      }
+      .cat-btn:hover .dot,
+      .cat-btn.active .dot {
+        transform: scale(1.4);
+      }
+
+      /* Warna per kategori — matching warna peta */
+      .cat-btn[data-category="sangat_rendah"] .dot { background: #a68989; color: #a68989; }
+      .cat-btn[data-category="rendah"]        .dot { background: #e7d3a5; color: #e7d3a5; }
+      .cat-btn[data-category="sedang"]        .dot { background: #a7dbd3; color: #a7dbd3; }
+      .cat-btn[data-category="tinggi"]        .dot { background: #6e8562; color: #6e8562; }
+
+      /* Hover: lift + amber border */
+      section.contact .cat-btn,
+      section.contact .reset-btn {
+        pointer-events: auto !important;
+        cursor: pointer !important;
+        font-family: 'Poppins', 'Montserrat', sans-serif !important;
       }
       .cat-btn:hover {
-        background: #ffae33;
+        background: rgba(245,164,37,0.12) !important;
+        border-color: rgba(245,164,37,0.5) !important;
+        color: #fff !important;
+        transform: translateX(5px);
+        box-shadow: 0 4px 20px rgba(245,164,37,0.2);
+      }
+
+      /* State aktif */
+      .cat-btn.active {
+        background: rgba(245,164,37,0.2) !important;
+        border-color: var(--amber) !important;
+        color: #fff !important;
+        transform: translateX(5px);
+        box-shadow: 0 0 0 2px var(--amber), 0 6px 24px rgba(245,164,37,0.25) !important;
+      }
+      .cat-btn.active::before {
+        content: '';
+        position: absolute;
+        right: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 6px;
+        height: 6px;
+        background: var(--amber);
+        border-radius: 50%;
+        box-shadow: 0 0 8px var(--amber);
+        animation: pulse-dot 1.5s infinite;
+      }
+      @keyframes pulse-dot {
+        0%, 100% { opacity: 1; transform: translateY(-50%) scale(1); }
+        50%       { opacity: 0.5; transform: translateY(-50%) scale(1.6); }
+      }
+
+      /* Tombol Reset */
+      .reset-btn {
+        font-family: 'Poppins', 'Montserrat', sans-serif;
+        padding: 10px 16px;
+        width: 100%;
+        background: transparent;
+        color: rgba(255,255,255,0.5);
+        border: 1px dashed rgba(255,255,255,0.2);
+        border-radius: 10px;
+        font-size: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 6px;
+        letter-spacing: 0.5px;
+        text-align: center;
+        position: relative;
+        z-index: 10;
+        pointer-events: auto !important;
+      }
+      .reset-btn:hover {
+        background: rgba(255,255,255,0.07);
+        border-color: rgba(255,255,255,0.45);
+        color: rgba(255,255,255,0.85);
+        letter-spacing: 1.5px;
+      }
+
+      /* Panel Peta */
+      .map-panel {
+        flex: 1 1 400px;
+        min-width: 280px;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+        border: 1px solid rgba(245,164,37,0.15);
+        position: relative;
+      }
+      .map-panel iframe {
+        display: block;
+        width: 100%;
+        height: 450px;
+        border: none;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .btn-panel { flex: 0 0 100%; flex-direction: row; flex-wrap: wrap; }
+        .cat-btn   { flex: 1 1 calc(50% - 5px); }
+        .map-panel iframe { height: 320px; }
+      }
+      @media (max-width: 480px) {
+        .cat-btn { flex: 1 1 100%; }
       }
     </style>
   </head>
@@ -63,14 +256,13 @@ https://templatemo.com/tm-557-grad-school
             <ul class="sub-menu">
               <li><a href="#section2">What?</a></li>
               <li><a href="#section3">Tabel?</a></li>
-              <li><a href="https://templatemo.com/about" rel="sponsored" class="external">External URL</a></li>
             </ul>
           </li>
           <!-- <li><a href="#section5">Video</a></li> -->
-          <li><a href="#section6">View Map</a></li>
+          <li><a href="#section5">View Map</a></li>
           <li>
             <a
-              href="https://semarangkota.bps.go.id/id/statistics-table/3/YmlzemNGUkNVblZLVVhOblREWnZXbkEzWld0eVVUMDkjMyMzMzc0/jumlah-rumah-sakit-umum--rumah-sakit-khusus--puskesmas--klinik-pratama--dan-posyandu-menurut-kecamatan-di-kota-semarang.html?year=2023"
+              href="https://kendalkab.bps.go.id/id/statistics-table/3/YmlzemNGUkNVblZLVVhOblREWnZXbkEzWld0eVVUMDkjMyMzMzI0/jumlah-rumah-sakit-umum--rumah-sakit-khusus--puskesmas--klinik-pratama--dan-posyandu-menurut-kecamatan-di-kabupaten-kendal.html?year=2024"
               class="external"
               >Data Source</a
             >
@@ -87,7 +279,7 @@ https://templatemo.com/tm-557-grad-school
 
       <div class="video-overlay header-text">
         <div class="caption">
-          <h2>Pemetaan Fasilitas Kesehatan dan Tenaga Kesehatan Di Kota <em style="color: rgb(102, 118, 171)">Semarang</em></h2>
+          <h2>Pemetaan Fasilitas Kesehatan dan Tenaga Kesehatan Di Kabupaten <em style="color: rgb(102, 118, 171)">Kendal</em></h2>
           <br />
           <br />
 
@@ -124,7 +316,7 @@ https://templatemo.com/tm-557-grad-school
                     </div>
                     <div class="col-md-6">
                       <p>
-                        Ketersediaan fasilitas kesehatan dan tenaga kesehatan yang merata merupakan faktor penting dalam meningkatkan kualitas pelayanan kesehatan suatu daerah. Di Kota Semarang, pertumbuhan penduduk dan dinamika urbanisasi
+                        Ketersediaan fasilitas kesehatan dan tenaga kesehatan yang merata merupakan faktor penting dalam meningkatkan kualitas pelayanan kesehatan suatu daerah. Di Kabupaten Kendal, pertumbuhan penduduk dan dinamika urbanisasi
                         menyebabkan kebutuhan layanan kesehatan meningkat dan tidak selalu sejalan dengan pemerataan penyedia layanan.
                       </p>
                       <p>
@@ -140,11 +332,11 @@ https://templatemo.com/tm-557-grad-school
                       <img src="assets/images/choose-us-image-02.png" alt="" />
                     </div>
                     <div class="col-md-6">
-                      <p>1. Menganalisis sebaran fasilitas kesehatan di Kota Semarang berdasarkan kategori (RS Umum, RS Khusus, Klinik, Puskesmas).</p>
+                      <p>1. Menganalisis sebaran fasilitas kesehatan di Kabupaten Kendal berdasarkan kategori (RS Umum, RS Khusus, Klinik, Puskesmas).</p>
                       <p>2. Mengidentifikasi persebaran tenaga kesehatan pada setiap fasilitas kesehatan.</p>
                       <p>3. Menilai tingkat pemerataan fasilitas dan tenaga kesehatan antar kecamatan.</p>
                       <p>4. Menyajikan hasil analisis dalam bentuk peta tematik menggunakan Sistem Informasi Geografis (SIG).</p>
-                      <p>5. Memberikan rekomendasi untuk mendukung perencanaan pemerataan pelayanan kesehatan di Kota Semarang.</p>
+                      <p>5. Memberikan rekomendasi untuk mendukung perencanaan pemerataan pelayanan kesehatan di Kabupaten Kendal.</p>
                     </div>
                   </div>
                 </article>
@@ -183,7 +375,7 @@ https://templatemo.com/tm-557-grad-school
       <div class="container">
         <div class="row">
           <div class="col-12">
-            <h4 class="mb-4" style="color: #fff; text-align: center">Tabel Sebaran Fasilitas & Tenaga Kesehatan – Kota Semarang</h4>
+            <h4 class="mb-4" style="color: #fff; text-align: center">Tabel Sebaran Fasilitas & Tenaga Kesehatan – Kabupaten Kendal</h4>
 
             <div class="table-responsive">
               <table class="table table-bordered table-striped table-white">
@@ -191,8 +383,8 @@ https://templatemo.com/tm-557-grad-school
                   <tr>
                     <th>No</th>
                     <th>Kecamatan</th>
-                    <th>RS Khusus</th>
                     <th>RS Umum</th>
+                    <th>Puskesmas</th>
                     <th>Klinik</th>
                     <th>Perawat</th>
                     <th>Bidan</th>
@@ -201,180 +393,244 @@ https://templatemo.com/tm-557-grad-school
                 </thead>
 
                 <tbody>
+                  <tr><td>1</td><td>Boja</td><td>2</td><td>2</td><td>7</td><td>171</td><td>80</td><td>57</td></tr>
+                  <tr><td>2</td><td>Brangsong</td><td>0</td><td>2</td><td>3</td><td>41</td><td>42</td><td>9</td></tr>
+                  <tr><td>3</td><td>Cepiring</td><td>0</td><td>0</td><td>4</td><td>28</td><td>32</td><td>5</td></tr>
+                  <tr><td>4</td><td>Gemuh</td><td>2</td><td>2</td><td>0</td><td>132</td><td>75</td><td>59</td></tr>
+                  <tr><td>5</td><td>Kaliwungu</td><td>0</td><td>1</td><td>5</td><td>99</td><td>47</td><td>5</td></tr>
+                  <tr><td>6</td><td>Kaliwungu Selatan</td><td>1</td><td>1</td><td>2</td><td>7</td><td>20</td><td>41</td></tr>
+                  <tr><td>7</td><td>Kangkung</td><td>0</td><td>2</td><td>2</td><td>12</td><td>26</td><td>6</td></tr>
+                  <tr><td>8</td><td>Kendal</td><td>1</td><td>2</td><td>9</td><td>371</td><td>97</td><td>97</td></tr>
+                  <tr><td>9</td><td>Limbangan</td><td>0</td><td>1</td><td>1</td><td>21</td><td>24</td><td>5</td></tr>
+                  <tr><td>10</td><td>Ngampel</td><td>0</td><td>1</td><td>3</td><td>10</td><td>27</td><td>4</td></tr>
+                  <tr><td>11</td><td>Pageruyung</td><td>0</td><td>1</td><td>3</td><td>16</td><td>18</td><td>3</td></tr>
+                  <tr><td>12</td><td>Patean</td><td>0</td><td>1</td><td>2</td><td>24</td><td>24</td><td>5</td></tr>
+                  <tr><td>13</td><td>Patebon</td><td>0</td><td>2</td><td>3</td><td>17</td><td>33</td><td>8</td></tr>
+                  <tr><td>14</td><td>Pegandon</td><td>0</td><td>1</td><td>1</td><td>32</td><td>34</td><td>5</td></tr>
+                  <tr><td>15</td><td>Plantungan</td><td>0</td><td>1</td><td>1</td><td>13</td><td>19</td><td>3</td></tr>
+                  <tr><td>16</td><td>Ringinarum</td><td>0</td><td>1</td><td>0</td><td>13</td><td>23</td><td>3</td></tr>
+                  <tr><td>17</td><td>Rowosari</td><td>0</td><td>1</td><td>1</td><td>41</td><td>34</td><td>8</td></tr>
+                  <tr><td>18</td><td>Singorojo</td><td>0</td><td>2</td><td>2</td><td>18</td><td>39</td><td>7</td></tr>
+                  <tr><td>19</td><td>Sukorejo</td><td>0</td><td>2</td><td>3</td><td>33</td><td>39</td><td>7</td></tr>
+                  <tr><td>20</td><td>Weleri</td><td>1</td><td>2</td><td>2</td><td>278</td><td>67</td><td>66</td></tr>
                   <tr>
                     <td>1</td>
-                    <td>Tembalang</td>
+                    <td>Kendal</td>
                     <td>1</td>
-                    <td>4</td>
-                    <td>27</td>
-                    <td>786</td>
-                    <td>161</td>
-                    <td>220</td>
+                    <td>2</td>
+                    <td>18</td>
+                    <td>320</td>
+                    <td>65</td>
+                    <td>142</td>
                   </tr>
 
                   <tr>
                     <td>2</td>
-                    <td>Semarang Selatan</td>
-                    <td>2</td>
-                    <td>3</td>
-                    <td>21</td>
-                    <td>165</td>
-                    <td>26</td>
-                    <td>203</td>
-                  </tr>
-
-                  <tr>
-                    <td>3</td>
-                    <td>Gajahmungkur</td>
-                    <td>1</td>
-                    <td>3</td>
-                    <td>16</td>
-                    <td>173</td>
-                    <td>25</td>
-                    <td>170</td>
-                  </tr>
-
-                  <tr>
-                    <td>4</td>
-                    <td>Banyumanik</td>
+                    <td>Kaliwungu</td>
                     <td>0</td>
-                    <td>3</td>
-                    <td>31</td>
-                    <td>545</td>
-                    <td>80</td>
-                    <td>351</td>
-                  </tr>
-
-                  <tr>
-                    <td>5</td>
-                    <td>Semarang Tengah</td>
-                    <td>0</td>
-                    <td>2</td>
+                    <td>1</td>
+                    <td>10</td>
+                    <td>185</td>
                     <td>38</td>
-                    <td>73</td>
+                    <td>97</td>
+                  </tr>
+
+                  <tr>
+                    <td>3</td>
+                    <td>Brangsong</td>
+                    <td>0</td>
+                    <td>0</td>
                     <td>5</td>
-                    <td>165</td>
+                    <td>92</td>
+                    <td>21</td>
+                    <td>44</td>
+                  </tr>
+
+                  <tr>
+                    <td>4</td>
+                    <td>Pegandon</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>4</td>
+                    <td>78</td>
+                    <td>18</td>
+                    <td>37</td>
+                  </tr>
+
+                  <tr>
+                    <td>5</td>
+                    <td>Ngampel</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>3</td>
+                    <td>64</td>
+                    <td>14</td>
+                    <td>29</td>
                   </tr>
 
                   <tr>
                     <td>6</td>
-                    <td>Semarang Timur</td>
-                    <td>2</td>
-                    <td>2</td>
+                    <td>Gemuh</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>6</td>
+                    <td>105</td>
+                    <td>24</td>
+                    <td>51</td>
+                  </tr>
+
+                  <tr>
+                    <td>7</td>
+                    <td>Ringinarum</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>3</td>
+                    <td>58</td>
+                    <td>13</td>
+                    <td>27</td>
+                  </tr>
+
+                  <tr>
+                    <td>8</td>
+                    <td>Weleri</td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>9</td>
+                    <td>167</td>
+                    <td>35</td>
+                    <td>84</td>
+                  </tr>
+
+                  <tr>
+                    <td>9</td>
+                    <td>Rowosari</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>4</td>
+                    <td>72</td>
                     <td>16</td>
-                    <td>133</td>
-                    <td>8</td>
-                    <td>103</td>
-                  </tr>
-
-                  <tr>
-                    <td>7</td>
-                    <td>Ngaliyan</td>
-                    <td>0</td>
-                    <td>2</td>
-                    <td>23</td>
-                    <td>572</td>
-                    <td>73</td>
-                    <td>197</td>
-                  </tr>
-
-                  <tr>
-                    <td>8</td>
-                    <td>Gayamsari</td>
-                    <td>0</td>
-                    <td>1</td>
-                    <td>9</td>
-                    <td>152</td>
-                    <td>17</td>
-                    <td>87</td>
-                  </tr>
-
-                  <tr>
-                    <td>9</td>
-                    <td>Genuk</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>7</td>
-                    <td>265</td>
-                    <td>31</td>
-                    <td>101</td>
+                    <td>33</td>
                   </tr>
 
                   <tr>
                     <td>10</td>
-                    <td>Semarang Barat</td>
-                    <td>2</td>
-                    <td>1</td>
-                    <td>26</td>
-                    <td>403</td>
-                    <td>47</td>
-                    <td>298</td>
+                    <td>Kangkung</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>3</td>
+                    <td>61</td>
+                    <td>13</td>
+                    <td>28</td>
                   </tr>
 
                   <tr>
                     <td>11</td>
-                    <td>Semarang Utara</td>
+                    <td>Cepiring</td>
                     <td>0</td>
                     <td>0</td>
-                    <td>8</td>
-                    <td>82</td>
-                    <td>9</td>
-                    <td>96</td>
+                    <td>5</td>
+                    <td>89</td>
+                    <td>19</td>
+                    <td>42</td>
                   </tr>
 
                   <tr>
                     <td>12</td>
-                    <td>Pedurungan</td>
-                    <td>2</td>
+                    <td>Patebon</td>
                     <td>0</td>
-                    <td>29</td>
-                    <td>722</td>
-                    <td>90</td>
-                    <td>419</td>
+                    <td>0</td>
+                    <td>4</td>
+                    <td>76</td>
+                    <td>17</td>
+                    <td>35</td>
                   </tr>
 
                   <tr>
                     <td>13</td>
-                    <td>Candisari</td>
+                    <td>Patean</td>
                     <td>0</td>
                     <td>0</td>
-                    <td>15</td>
-                    <td>228</td>
-                    <td>22</td>
-                    <td>99</td>
+                    <td>3</td>
+                    <td>55</td>
+                    <td>12</td>
+                    <td>25</td>
                   </tr>
 
                   <tr>
                     <td>14</td>
-                    <td>Gunungpati</td>
+                    <td>Sukorejo</td>
                     <td>0</td>
-                    <td>0</td>
-                    <td>8</td>
-                    <td>409</td>
-                    <td>90</td>
-                    <td>62</td>
+                    <td>1</td>
+                    <td>7</td>
+                    <td>134</td>
+                    <td>29</td>
+                    <td>63</td>
                   </tr>
 
                   <tr>
                     <td>15</td>
-                    <td>Mijen</td>
-                    <td>1</td>
+                    <td>Plantungan</td>
                     <td>0</td>
-                    <td>12</td>
-                    <td>233</td>
-                    <td>51</td>
-                    <td>75</td>
+                    <td>0</td>
+                    <td>2</td>
+                    <td>48</td>
+                    <td>11</td>
+                    <td>22</td>
                   </tr>
 
                   <tr>
                     <td>16</td>
-                    <td>Tugu</td>
-                    <td>0</td>
+                    <td>Boja</td>
                     <td>0</td>
                     <td>1</td>
-                    <td>122</td>
-                    <td>9</td>
+                    <td>8</td>
+                    <td>152</td>
+                    <td>32</td>
+                    <td>71</td>
+                  </tr>
+
+                  <tr>
+                    <td>17</td>
+                    <td>Limbangan</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>2</td>
                     <td>44</td>
+                    <td>10</td>
+                    <td>20</td>
+                  </tr>
+
+                  <tr>
+                    <td>18</td>
+                    <td>Singorojo</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>3</td>
+                    <td>57</td>
+                    <td>12</td>
+                    <td>26</td>
+                  </tr>
+
+                  <tr>
+                    <td>19</td>
+                    <td>Kaliwungu Selatan</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>4</td>
+                    <td>69</td>
+                    <td>15</td>
+                    <td>31</td>
+                  </tr>
+
+                  <tr>
+                    <td>20</td>
+                    <td>Pageruyung</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>2</td>
+                    <td>41</td>
+                    <td>9</td>
+                    <td>18</td>
                   </tr>
                 </tbody>
               </table>
@@ -399,7 +655,7 @@ https://templatemo.com/tm-557-grad-school
         <div class="row">
           <div class="col-md-12">
             <div style="width: 100%; height: 500px; border-radius: 12px; overflow: hidden">
-              <iframe src="peta kecamatan/index.html" style="border: 0; width: 100%; height: 100%; border-radius: 12px" allowfullscreen loading="lazy"> </iframe>
+              <iframe src="peta_kabupaten_kendal/index.html" style="border: 0; width: 100%; height: 100%; border-radius: 12px" allowfullscreen loading="lazy"> </iframe>
             </div>
           </div>
         </div>
@@ -411,24 +667,32 @@ https://templatemo.com/tm-557-grad-school
         <div class="row">
           <div class="col-md-12">
             <div class="section-heading">
-              <h2>Let’s Keep In Touch</h2>
+              <h2>Peta Klasifikasi</h2>
             </div>
           </div>
-          <div class="col-md-6">
-            <!-- Do you need a working HTML contact-form script?
-                	
-                    Please visit https://templatemo.com/contact page -->
-
-            <div class="category-buttons">
-              <button class="cat-btn" data-category="sangat_rendah">Sangat Rendah</button>
-              <button class="cat-btn" data-category="rendah">Rendah</button>
-              <button class="cat-btn" data-category="sedang">Sedang</button>
-              <button class="cat-btn" data-category="tinggi">Tinggi</button>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div id="map">
-              <iframe src="map-gis/index.html" width="100%" height="422px" frameborder="0" style="border: 0" allowfullscreen></iframe>
+          <div class="col-md-12">
+            <div class="peta-klasifikasi-wrapper">
+              <!-- Panel Tombol Filter -->
+              <div class="btn-panel">
+                <p class="btn-panel-title">Filter Kategori</p>
+                <button class="cat-btn" data-category="sangat_rendah" onclick="filterMap('sangat_rendah')">
+                  <span class="dot"></span> Sangat Rendah
+                </button>
+                <button class="cat-btn" data-category="rendah" onclick="filterMap('rendah')">
+                  <span class="dot"></span> Rendah
+                </button>
+                <button class="cat-btn" data-category="sedang" onclick="filterMap('sedang')">
+                  <span class="dot"></span> Sedang
+                </button>
+                <button class="cat-btn" data-category="tinggi" onclick="filterMap('tinggi')">
+                  <span class="dot"></span> Tinggi
+                </button>
+                <button class="reset-btn" data-category="all" onclick="filterMap('all')">&#8635; Tampilkan Semua</button>
+              </div>
+              <!-- Panel Peta -->
+              <div class="map-panel" id="map">
+                <iframe src="peta_klasifikasi_kabupaten_kendal/index.html" allowfullscreen loading="lazy"></iframe>
+              </div>
             </div>
           </div>
         </div>
@@ -506,14 +770,61 @@ https://templatemo.com/tm-557-grad-school
       });
     </script>
     <script>
-      const buttons = document.querySelectorAll(".cat-btn");
-      const mapFrame = document.querySelector("#map iframe");
+      // Fungsi global agar bisa dipanggil dari onclick inline juga
+      function filterMap(category) {
+        var mapFrame = document.querySelector(".map-panel iframe");
+        if (!mapFrame) return;
 
-      buttons.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          const cat = btn.dataset.category;
-          mapFrame.contentWindow.postMessage({ type: "filter-category", category: cat }, "*");
+        // Kirim postMessage, retry jika iframe belum siap
+        function tryPost() {
+          try {
+            mapFrame.contentWindow.postMessage({ type: "filter-category", category: category }, "*");
+          } catch(e) {
+            console.warn("postMessage gagal, coba lagi...", e);
+          }
+        }
+
+        if (mapFrame.contentDocument && mapFrame.contentDocument.readyState === "complete") {
+          tryPost();
+        } else {
+          mapFrame.addEventListener("load", tryPost, { once: true });
+          tryPost(); // coba langsung dulu
+        }
+
+        // Update visual tombol
+        document.querySelectorAll(".cat-btn").forEach(function(b) {
+          b.classList.remove("active");
         });
+        if (category !== "all") {
+          var clicked = document.querySelector('.cat-btn[data-category="' + category + '"]');
+          if (clicked) clicked.classList.add("active");
+        }
+      }
+
+      // Pasang event listener setelah DOM siap
+      document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll(".cat-btn").forEach(function(btn) {
+          btn.addEventListener("click", function() {
+            filterMap(this.dataset.category);
+          });
+        });
+        var resetBtn = document.querySelector(".reset-btn");
+        if (resetBtn) {
+          resetBtn.addEventListener("click", function() {
+            filterMap("all");
+          });
+        }
+      });
+
+      // Fallback: pasang lagi setelah window load (antisipasi jika DOMContentLoaded terlewat)
+      window.addEventListener("load", function() {
+        document.querySelectorAll(".cat-btn").forEach(function(btn) {
+          btn.onclick = function() { filterMap(this.dataset.category); };
+        });
+        var resetBtn = document.querySelector(".reset-btn");
+        if (resetBtn) {
+          resetBtn.onclick = function() { filterMap("all"); };
+        }
       });
     </script>
   </body>

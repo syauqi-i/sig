@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="data/LapakGIS_Batas_Kecamatan_2024_1.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        })
+        var hash = new L.Hash(map);
+        map.attributionControl.addAttribution('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a>');
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+            if (bounds_group.getLayers().length) {
+                map.fitBounds(bounds_group.getBounds());
+            }
+        }
+        var overlay_OSMStandard_0 = L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            opacity: 1.0
+        });
+        overlay_OSMStandard_0.addTo(map);
+        map.addLayer(overlay_OSMStandard_0);
+        function pop_LapakGIS_Batas_Kecamatan_2024_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">WADMKC</th>\
+                        <td>' + (feature.properties['WADMKC'] !== null ? Autolinker.link(String(feature.properties['WADMKC'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">RS Umum</th>\
+                        <td>' + (feature.properties['RS Umum'] !== null ? Autolinker.link(String(feature.properties['RS Umum'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Puskesmas</th>\
+                        <td>' + (feature.properties['Puskesmas'] !== null ? Autolinker.link(String(feature.properties['Puskesmas'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Klinik</th>\
+                        <td>' + (feature.properties['Klinik'] !== null ? Autolinker.link(String(feature.properties['Klinik'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Perawat</th>\
+                        <td>' + (feature.properties['Perawat'] !== null ? Autolinker.link(String(feature.properties['Perawat'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Bidan</th>\
+                        <td>' + (feature.properties['Bidan'] !== null ? Autolinker.link(String(feature.properties['Bidan'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">TNG Medis</th>\
+                        <td>' + (feature.properties['TNG Medis'] !== null ? Autolinker.link(String(feature.properties['TNG Medis'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_LapakGIS_Batas_Kecamatan_2024_1_0(feature) {
+            switch(String(feature.properties['WADMKC'])) {
+                case 'Boja':
+                    return {
+                pane: 'pane_LapakGIS_Batas_Kecamatan_2024_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.91)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(45,96,204,0.91)',
+            }
+                    break;
+                case 'Brangsong':
+                    return {
+                pane: 'pane_LapakGIS_Batas_Kecamatan_2024_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.91)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(21,185,206,0.91)',
+            }
+                    break;
+                case 'Cepiring':
+                    return {
+                pane: 'pane_LapakGIS_Batas_Kecamatan_2024_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.91)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(222,233,133,0.91)',
+            }
+                    break;
+                case 'Gemuh':
+                    return {
+                pane: 'pane_LapakGIS_Batas_Kecamatan_2024_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.91)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(224,202,100,0.91)',
+            }
+                    break;
+                case 'Kaliwungu':
+                    return {
+                pane: 'pane_LapakGIS_Batas_Kecamatan_2024_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.91)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(45,147,214,0.91)',
+            }
+                    break;
+                case 'Kaliwungu Selatan':
+                    return {
+                pane: 'pane_LapakGIS_Batas_Kecamatan_2024_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.91)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(222,150,67,0.91)',
+            }
+                    break;
+                case 'Kangkung':
+                    return {
+                pane: 'pane_LapakGIS_Batas_Kecamatan_2024_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.91)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(132,236,129,0.91)',
+            }
+                    break;
+                case 'Kendal':
+                    return {
+                pane: 'pane_LapakGIS_Batas_Kecamatan_2024_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.91)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(157,82,222,0.91)',
+            }
+                    break;
+                case 'Limbangan':
+                    return {
+                pane: 'pane_LapakGIS_Batas_Kecamatan_2024_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.91)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(230,126,130,0.91)',
+            }
+                    break;
+                case 'Ngampel':
+                    return {
+                pane: 'pane_LapakGIS_Batas_Kecamatan_2024_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.91)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(148,224,112,0.91)',
+            }
+                    break;
+                case 'Pageruyung':
+                    return {
+                pane: 'pane_LapakGIS_Batas_Kecamatan_2024_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.91)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(98,232,132,0.91)',
+            }
+                    break;
+                case 'Patean':
+                    return {
+                pane: 'pane_LapakGIS_Batas_Kecamatan_2024_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.91)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(235,121,224,0.91)',
+            }
+                    break;
+                case 'Patebon':
+                    return {
+                pane: 'pane_LapakGIS_Batas_Kecamatan_2024_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.91)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(40,46,206,0.91)',
+            }
+                    break;
+                case 'Pegandon':
+                    return {
+                pane: 'pane_LapakGIS_Batas_Kecamatan_2024_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.91)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(237,107,150,0.91)',
+            }
+                    break;
+                case 'Plantungan':
+                    return {
+                pane: 'pane_LapakGIS_Batas_Kecamatan_2024_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.91)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(13,221,124,0.91)',
+            }
+                    break;
+                case 'Ringinarum':
+                    return {
+                pane: 'pane_LapakGIS_Batas_Kecamatan_2024_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.91)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(238,127,89,0.91)',
+            }
+                    break;
+                case 'Rowosari':
+                    return {
+                pane: 'pane_LapakGIS_Batas_Kecamatan_2024_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.91)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(143,123,202,0.91)',
+            }
+                    break;
+                case 'Singorojo':
+                    return {
+                pane: 'pane_LapakGIS_Batas_Kecamatan_2024_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.91)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(228,52,161,0.91)',
+            }
+                    break;
+                case 'Sukorejo':
+                    return {
+                pane: 'pane_LapakGIS_Batas_Kecamatan_2024_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.91)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(27,223,191,0.91)',
+            }
+                    break;
+                case 'Weleri':
+                    return {
+                pane: 'pane_LapakGIS_Batas_Kecamatan_2024_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.91)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(179,223,114,0.91)',
+            }
+                    break;
+                default:
+                    return {
+                pane: 'pane_LapakGIS_Batas_Kecamatan_2024_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,0.91)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(213,122,233,0.91)',
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_LapakGIS_Batas_Kecamatan_2024_1');
+        map.getPane('pane_LapakGIS_Batas_Kecamatan_2024_1').style.zIndex = 401;
+        map.getPane('pane_LapakGIS_Batas_Kecamatan_2024_1').style['mix-blend-mode'] = 'normal';
+        var layer_LapakGIS_Batas_Kecamatan_2024_1 = new L.geoJson(json_LapakGIS_Batas_Kecamatan_2024_1, {
+            attribution: '<a href=""></a>',
+            pane: 'pane_LapakGIS_Batas_Kecamatan_2024_1',
+            onEachFeature: pop_LapakGIS_Batas_Kecamatan_2024_1,
+            style: style_LapakGIS_Batas_Kecamatan_2024_1_0,
+        });
+        bounds_group.addLayer(layer_LapakGIS_Batas_Kecamatan_2024_1);
+        map.addLayer(layer_LapakGIS_Batas_Kecamatan_2024_1);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'LapakGIS_Batas_Kecamatan_2024<br /><table><tr><td style="text-align: center;"><img src="legend/LapakGIS_Batas_Kecamatan_2024_1_Boja0.png" /></td><td>Boja</td></tr><tr><td style="text-align: center;"><img src="legend/LapakGIS_Batas_Kecamatan_2024_1_Brangsong1.png" /></td><td>Brangsong</td></tr><tr><td style="text-align: center;"><img src="legend/LapakGIS_Batas_Kecamatan_2024_1_Cepiring2.png" /></td><td>Cepiring</td></tr><tr><td style="text-align: center;"><img src="legend/LapakGIS_Batas_Kecamatan_2024_1_Gemuh3.png" /></td><td>Gemuh</td></tr><tr><td style="text-align: center;"><img src="legend/LapakGIS_Batas_Kecamatan_2024_1_Kaliwungu4.png" /></td><td>Kaliwungu</td></tr><tr><td style="text-align: center;"><img src="legend/LapakGIS_Batas_Kecamatan_2024_1_KaliwunguSelatan5.png" /></td><td>Kaliwungu Selatan</td></tr><tr><td style="text-align: center;"><img src="legend/LapakGIS_Batas_Kecamatan_2024_1_Kangkung6.png" /></td><td>Kangkung</td></tr><tr><td style="text-align: center;"><img src="legend/LapakGIS_Batas_Kecamatan_2024_1_Kendal7.png" /></td><td>Kendal</td></tr><tr><td style="text-align: center;"><img src="legend/LapakGIS_Batas_Kecamatan_2024_1_Limbangan8.png" /></td><td>Limbangan</td></tr><tr><td style="text-align: center;"><img src="legend/LapakGIS_Batas_Kecamatan_2024_1_Ngampel9.png" /></td><td>Ngampel</td></tr><tr><td style="text-align: center;"><img src="legend/LapakGIS_Batas_Kecamatan_2024_1_Pageruyung10.png" /></td><td>Pageruyung</td></tr><tr><td style="text-align: center;"><img src="legend/LapakGIS_Batas_Kecamatan_2024_1_Patean11.png" /></td><td>Patean</td></tr><tr><td style="text-align: center;"><img src="legend/LapakGIS_Batas_Kecamatan_2024_1_Patebon12.png" /></td><td>Patebon</td></tr><tr><td style="text-align: center;"><img src="legend/LapakGIS_Batas_Kecamatan_2024_1_Pegandon13.png" /></td><td>Pegandon</td></tr><tr><td style="text-align: center;"><img src="legend/LapakGIS_Batas_Kecamatan_2024_1_Plantungan14.png" /></td><td>Plantungan</td></tr><tr><td style="text-align: center;"><img src="legend/LapakGIS_Batas_Kecamatan_2024_1_Ringinarum15.png" /></td><td>Ringinarum</td></tr><tr><td style="text-align: center;"><img src="legend/LapakGIS_Batas_Kecamatan_2024_1_Rowosari16.png" /></td><td>Rowosari</td></tr><tr><td style="text-align: center;"><img src="legend/LapakGIS_Batas_Kecamatan_2024_1_Singorojo17.png" /></td><td>Singorojo</td></tr><tr><td style="text-align: center;"><img src="legend/LapakGIS_Batas_Kecamatan_2024_1_Sukorejo18.png" /></td><td>Sukorejo</td></tr><tr><td style="text-align: center;"><img src="legend/LapakGIS_Batas_Kecamatan_2024_1_Weleri19.png" /></td><td>Weleri</td></tr><tr><td style="text-align: center;"><img src="legend/LapakGIS_Batas_Kecamatan_2024_1_20.png" /></td><td></td></tr></table>': layer_LapakGIS_Batas_Kecamatan_2024_1,"OSM Standard": overlay_OSMStandard_0,},{collapsed:false}).addTo(map);
+        setBounds();
+        var i = 0;
+        layer_LapakGIS_Batas_Kecamatan_2024_1.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['WADMKC'] !== null?String('<div style="color: #000000; font-size: 8pt; font-weight: bold; font-family: \'News706 BT\', sans-serif;">' + layer.feature.properties['WADMKC']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_LapakGIS_Batas_Kecamatan_2024_1'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        resetLabels([layer_LapakGIS_Batas_Kecamatan_2024_1]);
+        map.on("zoomend", function(){
+            resetLabels([layer_LapakGIS_Batas_Kecamatan_2024_1]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_LapakGIS_Batas_Kecamatan_2024_1]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_LapakGIS_Batas_Kecamatan_2024_1]);
+        });
+        </script>
+    </body>
+</html>
